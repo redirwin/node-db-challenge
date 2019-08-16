@@ -1,16 +1,24 @@
 const db = require("../data/db-config");
 
 module.exports = {
-  //   addProject,
+  // addProject,
   getProjects,
   //   addTask,
-  getTasks
+  getTasks,
   //   addResource,
-  //   getResources
+  getResources
 };
+
+// function addProject() {
+
+// }
 
 function getProjects() {
   return db("project");
+}
+
+function getResources() {
+  return db("resource");
 }
 
 function getTasks(id) {
