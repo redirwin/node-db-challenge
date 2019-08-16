@@ -18,6 +18,7 @@ function addTask(newTask) {
 }
 
 function addResource(newResource) {
+  console.log(newResource)
   return db("resource").insert(newResource);
 }
 
