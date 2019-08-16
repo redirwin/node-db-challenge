@@ -1,7 +1,7 @@
 const db = require("../data/db-config");
 
 module.exports = {
-  // addProject,
+  addProject,
   getProjects,
   //   addTask,
   getTasks,
@@ -9,9 +9,9 @@ module.exports = {
   getResources
 };
 
-// function addProject() {
-
-// }
+function addProject(newProject) {
+  return db("project").insert(newProject);
+}
 
 function getProjects() {
   return db("project");

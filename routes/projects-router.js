@@ -4,7 +4,15 @@ const helpers = require("./model.js");
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {});
+router.post("/projects", async (req, res) => {
+  //   console.log(req.body);
+  try {
+    const projects = await helpers.addProject(req.body);
+    res.json(projects);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to post new project." });
+  }
+});
 
 router.get("/projects", async (req, res) => {
   try {
