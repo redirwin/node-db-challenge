@@ -4,6 +4,8 @@ const helpers = require("./model.js");
 
 const router = express.Router();
 
+// POST ENDPOINTS
+
 router.post("/projects", async (req, res) => {
   try {
     const projects = await helpers.addProject(req.body);
@@ -30,6 +32,8 @@ router.post("/resources", async (req, res) => {
     res.status(500).json({ message: "Failed to post new resource." });
   }
 });
+
+// GET ENDPOINTS
 
 router.get("/projects", async (req, res) => {
   try {
@@ -75,20 +79,18 @@ router.get("/resources/:id", async (req, res) => {
 router.get("/projects/:id", async (req, res) => {
   try {
     const project = await helpers.getAProject(req.params.id);
-    const tasks = await helpers.getTasks(req.params.id);
-    const resources = await helpers.getResources(req.params.id);
-    const completed = project.completed ? true : false;
     res.json({
       ...project,
-      completed: completed,
-      tasks: tasks.map(task => {
+      completed: project.completed ? true : false,
+      // rebuild tasks with only the stuff we need
+      tasks: await helpers.getTasks(req.params.id).map(task => {
         return {
           description: task.task_description,
           notes: task.task_notes,
           completed: task.task_completed ? true : false
         };
       }),
-      resources: resources
+      resources: await helpers.getResources(req.params.id)
     });
   } catch (err) {
     res.status(500).json({ message: "Failed to get projects" });
