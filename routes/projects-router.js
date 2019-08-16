@@ -14,6 +14,24 @@ router.post("/projects", async (req, res) => {
   }
 });
 
+router.post("/tasks", async (req, res) => {
+  try {
+    const tasks = await helpers.addTask(req.body);
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to post new task." });
+  }
+});
+
+router.post("/resources", async (req, res) => {
+  try {
+    const resource = await helpers.addResource(req.body);
+    res.json(resource);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to post new resource." });
+  }
+});
+
 router.get("/projects", async (req, res) => {
   try {
     const projects = await helpers.getProjects();
