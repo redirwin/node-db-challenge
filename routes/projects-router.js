@@ -72,7 +72,16 @@ router.get("/resources/:id", async (req, res) => {
     const resources = await helpers.getResources(req.params.id);
     res.json(resources);
   } catch (err) {
-    res.status(500).json({ message: "Failed to get resources" });
+    res.status(500).json({ message: "Failed to get resources by id." });
+  }
+});
+
+router.get("/resources", async (req, res) => {
+  try {
+    const resources = await helpers.getAllResources();
+    res.json(resources);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to get all resources." });
   }
 });
 
