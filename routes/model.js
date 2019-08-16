@@ -1,3 +1,27 @@
 const db = require("../data/db-config");
 
-module.exports = {};
+module.exports = {
+  //   addProject,
+  getProjects,
+  //   addTask,
+  getTasks
+  //   addResource,
+  //   getResources
+};
+
+function getProjects() {
+  return db("project");
+}
+
+function getTasks(id) {
+  return db("task")
+    .join("project", "task.project_id", "=", "project.id")
+    .where({ "project.id": id })
+    .select(
+      "project.name",
+      "project.description",
+      "task.description",
+      "task.notes"
+    )
+    .orderBy("task.id");
+}
