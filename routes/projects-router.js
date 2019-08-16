@@ -5,7 +5,6 @@ const helpers = require("./model.js");
 const router = express.Router();
 
 router.post("/projects", async (req, res) => {
-  //   console.log(req.body);
   try {
     const projects = await helpers.addProject(req.body);
     res.json(projects);
@@ -25,8 +24,8 @@ router.post("/tasks", async (req, res) => {
 
 router.post("/resources", async (req, res) => {
   try {
-    const resource = await helpers.addResource(req.body);
-    res.json(resource);
+    const resources = await helpers.addResource(req.body);
+    res.json(resources);
   } catch (err) {
     res.status(500).json({ message: "Failed to post new resource." });
   }
