@@ -1,5 +1,13 @@
 exports.up = function(knex) {
   return knex.schema
+    .createTable("users", users => {
+      users.increments();
+      users
+        .string("username", 128)
+        .notNullable()
+        .unique();
+      users.string("password", 128).notNullable();
+    })
     .createTable("project", tbl => {
       tbl.increments();
       tbl
@@ -66,5 +74,6 @@ exports.down = function(knex) {
     .dropTableIfExists("project_resources")
     .dropTableIfExists("resource")
     .dropTableIfExists("task")
-    .dropTableIfExists("project");
+    .dropTableIfExists("project")
+    .dropTableIfExists("users");
 };
