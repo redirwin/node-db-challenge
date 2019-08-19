@@ -1,14 +1,27 @@
 const express = require("express");
 
-const auth = require("./model.js");
+const auth = require("./auth-model.js");
 
-const router = express.Router();
+const bcrypt = require("bcryptjs");
 
-router.post("/register", async (req, res) => {
-  console.log("it's working!");
+const authRoute = express.Router();
+
+authRoute.post("/register", async (req, res) => {
+  let { username, password } = req.body;
+  const hash = bcrypt.hashSync(password, 12);
+  password = hash;
+  try {
+    const user = await auth.registerUser({
+      username: username,
+      password: hash
+    });
+    res.status(200).json({ message: "Success creating new user!" });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to create new user." });
+  }
 });
 
-router.post("/login", async (req, res) => {
+authRoute.post("/login", async (req, res) => {
   try {
     const projects = await helpers.addProject(req.body);
     res.json(projects);
@@ -17,7 +30,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/users", async (req, res) => {
+authRoute.get("/users", async (req, res) => {
   try {
     const projects = await helpers.getProjects();
     res.json(
@@ -29,8 +42,8 @@ router.get("/users", async (req, res) => {
       })
     );
   } catch (err) {
-    res.status(500).json({ message: "Failed to get projects" });
+    res.status(500).json({ message: "Failed to get users" });
   }
 });
 
-module.exports = router;
+module.exports = authRoute;
