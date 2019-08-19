@@ -22,11 +22,16 @@ authRoute.post("/register", async (req, res) => {
 });
 
 authRoute.post("/login", async (req, res) => {
+  let { username, password } = req.body;
   try {
-    const projects = await helpers.addProject(req.body);
-    res.json(projects);
+    const user = await auth.getUser(username);
+    if (user && bcrypt.compareSync(password, user.password)) {
+      res.status(200).json({ message: `Hey there, ${user.username}` });
+    } else {
+      res.status(401).json({ message: "You shall not pass!" });
+    }
   } catch (err) {
-    res.status(500).json({ message: "Failed to post new project." });
+    res.status(500).json({ message: "Failed to log in." });
   }
 });
 
