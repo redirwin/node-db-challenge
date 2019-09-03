@@ -40,11 +40,19 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+- A database is simply a collection of information. I could be analog (like an contact notebook) or digital. A relational database uses columns and rows to store records. SQL is one of many languages that we can use to communicate with a relational database. It is the language, not the data.
+
 - [ ] Why do tables need a `primary key`?
+
+- A primary key is unique to each entry in a record. It is a way to keep track of records regardless of changes to other properties, and it helps us reference records from other tables.
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+- Foregn key.
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+- A third table that tracks share properties of both, bringing in the other primary keys (as foreign keys). It can also add additional properties not found in either of the other tables. The shared table actually has a one-to-many relationship with each of the other two tables.
 
 ## Minimum Viable Product
 
